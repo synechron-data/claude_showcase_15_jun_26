@@ -7,7 +7,7 @@ const express = require('express');
 const router = express.Router();
 const { loginUser, refreshToken, revokeToken } = require('../auth/authService');
 const { authenticate, validateBody } = require('./middleware');
-const { validateEmail, validatePassword } = require('../utils/validators');
+const { validateEmail, validatePassword, sanitizeString } = require('../utils/validators');
 const { logger } = require('../utils/logger');
 
 /**
@@ -16,7 +16,8 @@ const { logger } = require('../utils/logger');
  */
 router.post('/login', validateBody(['email', 'password']), async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email: rawEmail, password } = req.body;
+    const email = sanitizeString(rawEmail);
 
     if (!validateEmail(email)) {
       return res.status(400).json({ error: 'Invalid email format' });

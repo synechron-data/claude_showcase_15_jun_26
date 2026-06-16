@@ -1,0 +1,88 @@
+<section class="layout">
+  <!-- Form card: create or edit -->
+  <aside class="card form-card">
+    <h2>{{ editingId ? 'Edit task' : 'New task' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        Title
+        <input type="text" formControlName="title" placeholder="What needs doing?" />
+      </label>
+      <p class="field-error"
+         *ngIf="form.controls.title.touched && form.controls.title.invalid">
+        Title is required (max 120 characters).
+      </p>
+
+      <label>
+        Description
+        <textarea formControlName="description" rows="3"
+                  placeholder="Optional details"></textarea>
+      </label>
+
+      <div class="row">
+        <label>
+          Status
+          <select formControlName="status">
+            <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+          </select>
+        </label>
+
+        <label>
+          Priority
+          <select formControlName="priority">
+            <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Due date
+        <input type="date" formControlName="dueDate" />
+      </label>
+
+      <div class="actions">
+        <button type="submit" class="primary">
+          {{ editingId ? 'Save changes' : 'Add task' }}
+        </button>
+        <button type="button" *ngIf="editingId" (click)="resetForm()">Cancel</button>
+      </div>
+    </form>
+  </aside>
+
+  <!-- Task list -->
+  <main class="list-pane">
+    <div class="filters">
+      <button [class.active]="filter === null" (click)="setFilter(null)">All</button>
+      <button *ngFor="let s of statuses"
+              [class.active]="filter === s"
+              (click)="setFilter(s)">{{ s }}</button>
+    </div>
+
+    <p *ngIf="error" class="banner error">{{ error }}</p>
+    <p *ngIf="loading" class="banner">Loading…</p>
+
+    <p *ngIf="!loading && !error && tasks.length === 0" class="empty">
+      No tasks yet. Create one on the left!
+    </p>
+
+    <ul class="tasks">
+      <li *ngFor="let task of tasks; trackBy: trackById"
+          class="card task"
+          [class.done]="task.status === 'DONE'">
+        <div class="task-head">
+          <span class="badge status-{{ task.status }}">{{ task.status }}</span>
+          <span class="badge prio-{{ task.priority }}">{{ task.priority }}</span>
+          <span *ngIf="task.dueDate" class="due">due {{ task.dueDate }}</span>
+        </div>
+
+        <h3>{{ task.title }}</h3>
+        <p *ngIf="task.description" class="desc">{{ task.description }}</p>
+
+        <div class="task-actions">
+          <button (click)="edit(task)">Edit</button>
+          <button class="danger" (click)="remove(task)">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </main>
+</section>

@@ -1,0 +1,29 @@
+.app-header {
+  background: #111827;
+  color: #fff;
+
+  &__inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.35rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+}
+
+.app-content {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}

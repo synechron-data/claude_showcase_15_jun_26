@@ -13,6 +13,8 @@ Stateless, pure-function helpers. No Express, no auth logic, no side effects (ex
 |---|---|---|
 | `validateEmail(email)` | string | boolean — local part `[a-zA-Z0-9._%+\-]+`, domain `[a-zA-Z0-9.\-]+`, TLD letters-only min 2 chars |
 | `validatePassword(password)` | string | boolean (min 8 chars) |
+| `validatePasswordStrength(password)` | string | `{ valid, errors[] }` — min 10 chars, upper, lower, digit, special char |
+| `validatePhoneNumber(phone)` | string | boolean — E.164 format (`+` then 2–15 digits, no leading zero on country code) |
 | `validateUUID(id)` | string | boolean (UUID v4) |
 | `sanitizeString(input)` | string | trimmed string, control chars stripped |
 

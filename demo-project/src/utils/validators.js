@@ -50,9 +50,59 @@ function sanitizeString(input) {
   return input.trim().replace(/[\x00-\x1F\x7F]/g, '');
 }
 
+/**
+ * Validates password strength.
+ * Requires: min 10 characters, at least one uppercase letter, one lowercase
+ * letter, one digit, and one special character.
+ *
+ * @param {string} password
+ * @returns {{ valid: boolean, errors: string[] }}
+ */
+function validatePasswordStrength(password) {
+  if (typeof password !== 'string') {
+    return { valid: false, errors: ['Password must be a string'] };
+  }
+
+  const errors = [];
+
+  if (password.length < 10) {
+    errors.push('Password must be at least 10 characters');
+  }
+  if (!/[A-Z]/.test(password)) {
+    errors.push('Password must contain at least one uppercase letter');
+  }
+  if (!/[a-z]/.test(password)) {
+    errors.push('Password must contain at least one lowercase letter');
+  }
+  if (!/[0-9]/.test(password)) {
+    errors.push('Password must contain at least one number');
+  }
+  if (!/[^A-Za-z0-9]/.test(password)) {
+    errors.push('Password must contain at least one special character');
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validates an international phone number in E.164 format.
+ * E.164: a '+' followed by 2–15 digits, country code must not start with 0.
+ * Accepts: +14155552671, +447911123456, +919876543210
+ * Rejects: 07911123456, 415-555-2671, (415) 555-2671
+ *
+ * @param {string} phone
+ * @returns {boolean}
+ */
+function validatePhoneNumber(phone) {
+  if (!phone || typeof phone !== 'string') return false;
+  return /^\+[1-9]\d{1,14}$/.test(phone.trim());
+}
+
 module.exports = {
   validateEmail,
   validatePassword,
+  validatePasswordStrength,
+  validatePhoneNumber,
   validateUUID,
   sanitizeString
 };

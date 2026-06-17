@@ -66,7 +66,7 @@ function isTokenExpired(token) {
 
     const now = Math.floor(Date.now() / 1000);
 
-    return decoded.exp > now;
+    return decoded.exp < now;
   } catch (err) {
     return true;
   }

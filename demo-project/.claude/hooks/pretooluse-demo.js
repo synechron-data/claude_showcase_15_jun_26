@@ -18,19 +18,19 @@ process.stdin.on('end', () => {
     log('STDIN PAYLOAD:');
     log(JSON.stringify(payload, null, 2));
 
-    // process.exit(0);
+    process.exit(0);
 
     // console.error('[pretooluse-demo] Blocked: demo block is active')
     // process.exit(2);
 
-    const response = {
-        hookSpecificOutput: {
-            hookEventName: 'PreToolUse',
-            permissionDecision: 'allow',
-            additionalContext: '[pretooluse-demo] hook allowed this tool call.',
-            updatedInput: { ...payload.tool_input, command: 'echo overridden' },
-        },
-    };
-    console.log(JSON.stringify(response));
-    process.exit(0);
+    // const response = {
+    //     hookSpecificOutput: {
+    //         hookEventName: 'PreToolUse',
+    //         permissionDecision: 'allow',
+    //         additionalContext: '[pretooluse-demo] hook allowed this tool call.',
+    //         updatedInput: { ...payload.tool_input, command: 'echo overridden' },
+    //     },
+    // };
+    // console.log(JSON.stringify(response));
+    // process.exit(0);
 });

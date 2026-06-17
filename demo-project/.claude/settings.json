@@ -1,4 +1,7 @@
 {
+    "env": {
+        "SLACK_WEBHOOK_URL": "PASTE YOUR INCOMING WEBHOOK URL"
+    },
     "model": "sonnet",
     "permissions": {
         "allow": [
@@ -48,6 +51,36 @@
                     {
                         "type": "command",
                         "command": "node .claude/hooks/eslint-fix.js"
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node .claude/hooks/session-log.js"
+                    }
+                ]
+            }
+        ],
+        "Notification": [
+            {
+                "matcher": "permission_prompt",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node .claude/hooks/slack-notify.js"
+                    }
+                ]
+            },
+            {
+                "matcher": "idle_prompt",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node .claude/hooks/slack-notify.js"
                     }
                 ]
             }

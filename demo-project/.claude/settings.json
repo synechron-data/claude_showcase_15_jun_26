@@ -40,6 +40,17 @@
                     }
                 ]
             }
+        ],
+        "PostToolUse": [
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node .claude/hooks/eslint-fix.js"
+                    }
+                ]
+            }
         ]
     }
 }

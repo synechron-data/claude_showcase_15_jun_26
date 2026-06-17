@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "sync-plugin-official@sync-plugin-marketplace": true
+  }
+}
